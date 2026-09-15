@@ -96,6 +96,34 @@ export default function Home() {
         </section>
       </Reveal>
 
+           {/* Create account / sign in CTA — only shown to logged-out visitors */}
+      {!user && (
+        <Reveal className="max-w-content mx-auto px-5 md:px-8 py-4 md:py-8">
+          <div className="bg-cloud/60 p-8 md:p-10 text-center">
+            <h2 className="font-display text-2xl md:text-3xl text-ink mb-3">New to LUXE CART?</h2>
+            <p className="text-stone text-sm mb-6 max-w-sm mx-auto">
+              Create an account for faster checkout, order tracking and saved favourites.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <Link
+                to="/register"
+                className="w-full sm:w-auto bg-ink text-bone px-7 py-3 text-sm hover:bg-wine transition-colors"
+              >
+                Create account
+              </Link>
+              <Link
+                to="/login"
+                className="w-full sm:w-auto border border-ink text-ink px-7 py-3 text-sm hover:border-wine hover:text-wine transition-colors"
+              >
+                Sign in
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      )}
+
+
+  
       {/* Categories */}
       <Reveal className="max-w-content mx-auto px-5 md:px-8 py-16 md:py-20">
         <h2 className="font-display text-3xl md:text-4xl text-ink mb-8">Shop by category</h2>
@@ -182,32 +210,6 @@ export default function Home() {
             {bestSellers.map((p) => (
               <ProductCard key={p._id} product={p} />
             ))}
-          </div>
-        </Reveal>
-      )}
-
-            {/* Create account / sign in CTA — only shown to logged-out visitors */}
-      {!user && (
-        <Reveal className="max-w-content mx-auto px-5 md:px-8 py-4 md:py-8">
-          <div className="bg-cloud/60 p-8 md:p-10 text-center">
-            <h2 className="font-display text-2xl md:text-3xl text-ink mb-3">New to LUXE CART?</h2>
-            <p className="text-stone text-sm mb-6 max-w-sm mx-auto">
-              Create an account for faster checkout, order tracking and saved favourites.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link
-                to="/register"
-                className="w-full sm:w-auto bg-ink text-bone px-7 py-3 text-sm hover:bg-wine transition-colors"
-              >
-                Create account
-              </Link>
-              <Link
-                to="/login"
-                className="w-full sm:w-auto border border-ink text-ink px-7 py-3 text-sm hover:border-wine hover:text-wine transition-colors"
-              >
-                Sign in
-              </Link>
-            </div>
           </div>
         </Reveal>
       )}
