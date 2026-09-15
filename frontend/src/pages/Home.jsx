@@ -68,14 +68,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
           <div className="absolute inset-x-0 bottom-0">
             <div className="max-w-content mx-auto px-5 md:px-8 pb-10 md:pb-16">
-              <h1 className="font-display text-bone text-[42px] leading-[1.05] md:text-7xl max-w-xl">
-                Style.
-                <br />
-                Quality.
-                <br/>
-                Confidence.
-              </h1>
-
+          
               <div className="flex flex-wrap gap-3 mt-7">
                 <Link
                   to="/shop"
