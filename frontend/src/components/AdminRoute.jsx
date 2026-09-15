@@ -10,8 +10,8 @@ export default function AdminRoute({ children }) {
   if (loading) {
     return <div className="max-w-content mx-auto px-5 py-24 text-center text-sm text-stone">Loading…</div>;
   }
-  if (!user) {
-    return <Navigate to="/login" replace />;
+    if (!user) {
+    return <Navigate to="/admin/login" replace />;
   }
   if (!isAdmin) {
     return <Navigate to="/" replace />;

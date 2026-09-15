@@ -17,6 +17,7 @@ import Account from './pages/Account';
 import ComingSoon from './pages/ComingSoon';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/admin/Dashboard';
+import AdminLogin from './pages/admin/AdminLogin';
 import AdminProducts from './pages/admin/AdminProducts';
 import ProductForm from './pages/admin/ProductForm';
 import AdminOrders from './pages/admin/AdminOrders';
@@ -67,7 +68,7 @@ export default function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Route>
-
+     <Route path="admin/login" element={<AdminLogin />} />
       <Route
         path="admin"
         element={
