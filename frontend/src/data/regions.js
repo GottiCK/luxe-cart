@@ -1,0 +1,18 @@
+export const GHANA_REGIONS = [
+  { name: 'Greater Accra', fee: 20 },
+  { name: 'Ashanti', fee: 30 },
+  { name: 'Central', fee: 30 },
+  { name: 'Eastern', fee: 30 },
+  { name: 'Western', fee: 30 },
+  { name: 'Western North', fee: 40 },
+  { name: 'Volta', fee: 35 },
+  { name: 'Oti', fee: 45 },
+  { name: 'Bono', fee: 40 },
+  { name: 'Bono East', fee: 40 },
+  { name: 'Ahafo', fee: 40 },
+  { name: 'Northern', fee: 50 },
+  { name: 'North East', fee: 50 },
+  { name: 'Savannah', fee: 50 },
+  { name: 'Upper East', fee: 55 },
+  { name: 'Upper West', fee: 55 },
+];
