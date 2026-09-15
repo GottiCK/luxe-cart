@@ -6,11 +6,11 @@ import PlaceholderImage from './PlaceholderImage';
 // image-upload phase is built) so they render as actual <img> tags, unlike
 // the site's static design placeholders (hero, category tiles). Falls back
 // to the labeled empty state if the URL is missing or fails to load.
-export default function ProductImage({ src, alt, ratio = 'aspect-[3/4]', className = '', imgClassName = '' }) {
+export default function ProductImage({ src, alt, ratio = 'aspect-[3/4]', className = '', imgClassName = '', dims }) {
   const [errored, setErrored] = useState(false);
 
   if (!src || errored) {
-    return <PlaceholderImage label={alt} ratio={ratio} className={className} />;
+    return <PlaceholderImage label={alt} dims={dims} ratio={ratio} className={className} />;
   }
 
   return (

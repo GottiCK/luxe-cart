@@ -22,6 +22,7 @@ import ProductForm from './pages/admin/ProductForm';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminCategories from './pages/admin/AdminCategories';
+import SiteContent from './pages/admin/SiteContent';
 
 export default function App() {
   return (
@@ -82,6 +83,7 @@ export default function App() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="customers" element={<AdminCustomers />} />
         <Route path="categories" element={<AdminCategories />} />
+        <Route path="content" element={<SiteContent />} />
       </Route>
     </Routes>
     </>

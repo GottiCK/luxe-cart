@@ -57,3 +57,9 @@ export async function fetchDashboardStats() {
   const { data } = await api.get('/stats');
   return data.stats;
 }
+
+// Site content (hero + category images)
+export async function adminUpdateSiteSettings(payload) {
+  const { data } = await api.put('/settings', payload);
+  return data.settings;
+}

@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import PlaceholderImage from '../components/ui/PlaceholderImage';
+import ProductImage from '../components/ui/ProductImage';
 import ProductCard from '../components/ui/ProductCard';
 import Stars from '../components/ui/Stars';
 import { sampleReviews } from '../data/sampleProducts';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 import { fetchProducts } from '../api/products';
+import { fetchSiteSettings } from '../api/settings';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const CATEGORIES = [
-  { label: 'Clothes', to: '/shop?category=clothes' },
-  { label: 'Shoes', to: '/shop?category=shoes' },
-  { label: 'Slippers', to: '/shop?category=slippers' },
+  { label: 'Clothes', to: '/shop?category=clothes', key: 'clothes' },
+  { label: 'Shoes', to: '/shop?category=shoes', key: 'shoes' },
+  { label: 'Slippers', to: '/shop?category=slippers', key: 'slippers' },
 ];
 
 const fadeInUp = {
@@ -41,11 +42,13 @@ export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [newArrivals, setNewArrivals] = useState([]);
   const [bestSellers, setBestSellers] = useState([]);
+  const [siteSettings, setSiteSettings] = useState(null);
 
   useEffect(() => {
     fetchProducts({ isFeatured: 'true', limit: 4 }).then((d) => setFeatured(d.products)).catch(() => {});
     fetchProducts({ isNewArrival: 'true', limit: 4 }).then((d) => setNewArrivals(d.products)).catch(() => {});
     fetchProducts({ isBestSeller: 'true', limit: 4 }).then((d) => setBestSellers(d.products)).catch(() => {});
+    fetchSiteSettings().then(setSiteSettings).catch(() => {});
   }, []);
 
   return (
@@ -53,8 +56,9 @@ export default function Home() {
       {/* Hero */}
       <Reveal>
         <section className="relative">
-          <PlaceholderImage
-            label="Hero photo — model wearing a hero product"
+          <ProductImage
+            src={siteSettings?.heroImage?.url}
+            alt="Hero photo — model wearing a hero product"
             dims="Recommended 1920×1080px"
             ratio="aspect-[4/5] md:aspect-[16/8]"
             className="bg-gradient-to-br from-cloud to-stone/10"
@@ -96,7 +100,12 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {CATEGORIES.map((cat) => (
             <Link key={cat.label} to={cat.to} className="group relative block">
-              <PlaceholderImage label={`${cat.label} category photo`} dims="Recommended 900×1200px" ratio="aspect-[3/4]" />
+              <ProductImage
+                src={siteSettings?.categoryImages?.[cat.key]?.url}
+                alt={`${cat.label} category photo`}
+                dims="Recommended 900×1200px"
+                ratio="aspect-[3/4]"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
               <span className="absolute bottom-5 left-5 font-display text-2xl text-bone group-hover:text-bone/80 transition-colors">
                 {cat.label}
