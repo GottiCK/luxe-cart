@@ -18,9 +18,9 @@ export default function Login() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const user = await login(form.email, form.password);
+            const user = await login(form.email, form.password);
       toast.success(`Welcome back, ${user.name.split(' ')[0]}`);
-      navigate(location.state?.from?.pathname || '/account');
+      navigate(location.state?.from?.pathname || '/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Something went wrong — try again');
     } finally {

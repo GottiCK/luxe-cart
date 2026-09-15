@@ -17,9 +17,9 @@ export default function Register() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const user = await register(form);
+            const user = await register(form);
       toast.success(`Welcome to LUXE CART, ${user.name.split(' ')[0]}`);
-      navigate('/account');
+      navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Something went wrong — try again');
     } finally {
