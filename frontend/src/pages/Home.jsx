@@ -9,6 +9,7 @@ import { buildWhatsAppLink } from '../utils/whatsapp';
 import { fetchProducts } from '../api/products';
 import { fetchSiteSettings } from '../api/settings';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useAuth } from '../context/AuthContext';
 
 const CATEGORIES = [
   { label: 'Clothes', to: '/shop?category=clothes', key: 'clothes' },
@@ -38,6 +39,7 @@ function Reveal({ children, className = '' }) {
 
 export default function Home() {
   usePageTitle();
+  const { user } = useAuth();
 
   const [featured, setFeatured] = useState([]);
   const [newArrivals, setNewArrivals] = useState([]);
@@ -180,6 +182,32 @@ export default function Home() {
             {bestSellers.map((p) => (
               <ProductCard key={p._id} product={p} />
             ))}
+          </div>
+        </Reveal>
+      )}
+
+            {/* Create account / sign in CTA — only shown to logged-out visitors */}
+      {!user && (
+        <Reveal className="max-w-content mx-auto px-5 md:px-8 py-4 md:py-8">
+          <div className="bg-cloud/60 p-8 md:p-10 text-center">
+            <h2 className="font-display text-2xl md:text-3xl text-ink mb-3">New to LUXE CART?</h2>
+            <p className="text-stone text-sm mb-6 max-w-sm mx-auto">
+              Create an account for faster checkout, order tracking and saved favourites.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <Link
+                to="/register"
+                className="w-full sm:w-auto bg-ink text-bone px-7 py-3 text-sm hover:bg-wine transition-colors"
+              >
+                Create account
+              </Link>
+              <Link
+                to="/login"
+                className="w-full sm:w-auto border border-ink text-ink px-7 py-3 text-sm hover:border-wine hover:text-wine transition-colors"
+              >
+                Sign in
+              </Link>
+            </div>
           </div>
         </Reveal>
       )}
