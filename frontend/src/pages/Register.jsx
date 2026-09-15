@@ -62,7 +62,7 @@ export default function Register() {
             name="phone"
             value={form.phone}
             onChange={handleChange}
-            placeholder="055 992 0138"
+            placeholder="0240000000"
             className="w-full border border-stone/30 bg-transparent px-4 py-3 text-sm focus:border-wine outline-none"
           />
         </div>
