@@ -11,6 +11,8 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import OrderHistory from './pages/OrderHistory';
+import Favorites from './pages/Favorites';
+import DeliveryAddresses from './pages/DeliveryAddresses';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Account from './pages/Account';
@@ -46,6 +48,22 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="account/favourites"
+          element={
+            <ProtectedRoute>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="account/addresses"
+          element={
+            <ProtectedRoute>
+              <DeliveryAddresses />
+            </ProtectedRoute>
+          }
+        />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route
@@ -68,7 +86,8 @@ export default function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Route>
-     <Route path="admin/login" element={<AdminLogin />} />
+
+      <Route path="admin/login" element={<AdminLogin />} />
       <Route
         path="admin"
         element={

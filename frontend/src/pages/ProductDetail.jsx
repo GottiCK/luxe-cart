@@ -6,6 +6,8 @@ import { useCart } from '../context/CartContext';
 import ProductImage from '../components/ui/ProductImage';
 import { buildWhatsAppLink, buildProductWhatsAppMessage } from '../utils/whatsapp';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useFavorites } from '../context/FavoritesContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -20,6 +22,9 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
 
   usePageTitle(product?.name);
+
+  const { user } = useAuth();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     setLoading(true);
@@ -77,6 +82,22 @@ export default function ProductDetail() {
     navigate('/cart');
   };
 
+  const favorited = isFavorite(product._id);
+
+  const handleToggleFavorite = async () => {
+    if (!user) {
+      toast.error('Sign in to save favourites');
+      navigate('/login');
+      return;
+    }
+    try {
+      await toggleFavorite(product._id);
+      toast.success(favorited ? 'Removed from favourites' : 'Added to favourites');
+    } catch {
+      toast.error('Could not update favourites');
+    }
+  };
+
   const whatsappMessage = buildProductWhatsAppMessage({
     name: product.name,
     size: size || 'Not selected',
@@ -109,7 +130,25 @@ export default function ProductDetail() {
         {/* Details */}
         <div>
           <p className="text-xs text-stone uppercase tracking-wide mb-2">{product.subcategory}</p>
-          <h1 className="font-display text-3xl md:text-4xl text-ink mb-3">{product.name}</h1>
+          <div className="flex items-start justify-between gap-4 mb-3">
+            <h1 className="font-display text-3xl md:text-4xl text-ink">{product.name}</h1>
+            <button
+              onClick={handleToggleFavorite}
+              aria-label={favorited ? 'Remove from favourites' : 'Add to favourites'}
+              className="shrink-0 w-10 h-10 rounded-full border border-stone/25 flex items-center justify-center hover:border-wine transition-colors mt-1"
+            >
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill={favorited ? '#7C2438' : 'none'}
+                stroke={favorited ? '#7C2438' : '#1C1815'}
+                strokeWidth="1.8"
+              >
+                <path d="M12 21s-6.7-4.35-9.3-8.28C.86 9.94 1.64 6.2 4.6 4.8c2.1-.99 4.3-.2 5.4 1.4l2 2.9 2-2.9c1.1-1.6 3.3-2.39 5.4-1.4 2.96 1.4 3.74 5.14 1.9 7.92C18.7 16.65 12 21 12 21z" />
+              </svg>
+            </button>
+          </div>
 
           <div className="flex items-baseline gap-3 mb-6">
             <span className="text-lg text-ink">GH₵ {price?.toLocaleString()}</span>

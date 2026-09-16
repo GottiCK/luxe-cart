@@ -1,12 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import ProductImage from './ProductImage';
 import { buildWhatsAppLink, buildProductWhatsAppMessage } from '../../utils/whatsapp';
+import { useFavorites } from '../../context/FavoritesContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function ProductCard({ product }) {
   const { name, price, discountPrice, slug, images, isNewArrival, isBestSeller, onSale, inStock } = product;
+  const { user } = useAuth();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const navigate = useNavigate();
 
   const badge = isNewArrival ? 'New' : isBestSeller ? 'Bestseller' : onSale ? 'Sale' : null;
   const displayPrice = onSale ? discountPrice : price;
+  const favorited = isFavorite(product._id);
 
   const handleWhatsApp = (e) => {
     e.preventDefault();
@@ -19,6 +26,22 @@ export default function ProductCard({ product }) {
       price: displayPrice,
     });
     window.open(buildWhatsAppLink(message), '_blank', 'noopener,noreferrer');
+  };
+
+  const handleToggleFavorite = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      toast.error('Sign in to save favourites');
+      navigate('/login');
+      return;
+    }
+    try {
+      await toggleFavorite(product._id);
+      toast.success(favorited ? 'Removed from favourites' : 'Added to favourites');
+    } catch {
+      toast.error('Could not update favourites');
+    }
   };
 
   return (
@@ -35,6 +58,22 @@ export default function ProductCard({ product }) {
             Sold out
           </span>
         )}
+        <button
+          onClick={handleToggleFavorite}
+          aria-label={favorited ? 'Remove from favourites' : 'Add to favourites'}
+          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-bone/90 flex items-center justify-center hover:bg-bone transition-colors"
+        >
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill={favorited ? '#7C2438' : 'none'}
+            stroke={favorited ? '#7C2438' : '#1C1815'}
+            strokeWidth="1.8"
+          >
+            <path d="M12 21s-6.7-4.35-9.3-8.28C.86 9.94 1.64 6.2 4.6 4.8c2.1-.99 4.3-.2 5.4 1.4l2 2.9 2-2.9c1.1-1.6 3.3-2.39 5.4-1.4 2.96 1.4 3.74 5.14 1.9 7.92C18.7 16.65 12 21 12 21z" />
+          </svg>
+        </button>
         <button
           onClick={handleWhatsApp}
           aria-label={`Ask about ${name} on WhatsApp`}

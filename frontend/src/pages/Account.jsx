@@ -26,12 +26,14 @@ export default function Account() {
           <p className="text-sm text-ink mb-1">Orders</p>
           <p className="text-xs text-stone">View your order history</p>
         </Link>
-        {['Favourites', 'Delivery details'].map((label) => (
-          <div key={label} className="border border-stone/20 p-6">
-            <p className="text-sm text-ink mb-1">{label}</p>
-            <p className="text-xs text-stone">Coming in a later phase.</p>
-          </div>
-        ))}
+        <Link to="/account/favourites" className="border border-stone/20 p-6 block hover:border-wine transition-colors">
+          <p className="text-sm text-ink mb-1">Favourites</p>
+          <p className="text-xs text-stone">Products you've saved</p>
+        </Link>
+        <Link to="/account/addresses" className="border border-stone/20 p-6 block hover:border-wine transition-colors">
+          <p className="text-sm text-ink mb-1">Delivery details</p>
+          <p className="text-xs text-stone">Manage saved addresses</p>
+        </Link>
       </div>
 
       <button
